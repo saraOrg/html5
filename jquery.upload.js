@@ -11,7 +11,7 @@
         fd.append(self.id, document.getElementById(self.id).files[0]);
         xhr.upload.addEventListener("progress", function(evt) {
             if ($.isFunction(options.onUploadProgress)) {
-                options.onUploadProgress(evt);
+                options.onUploadProgress(evt.lengthComputable, evt.loaded, evt.total);
             } else {
                 uploadProgress(self, evt);
             }
@@ -59,7 +59,7 @@
      * @returns {undefined}
      */
     function uploadProgress(self, evt) {
-        var processBar = ''
+        var processBar = '';
         if (!$('#default_process_bar').size()) {
             processBar = $('<div id="default_process_bar"></div>');
             $(self).after(processBar);
