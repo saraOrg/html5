@@ -16,12 +16,15 @@
                 uploadProgress(self, evt);
             }
         }, false);
-        //上传成功
+        //上传完成
         xhr.addEventListener("load", function(evt) {
             if ($.isFunction(options.onUploadComplete)) {
                 options.onUploadComplete(evt);
             } else {
-                alert(evt.target.responseText);
+                //alert(evt.target.responseText);
+                if ($('#default_process_bar').size()) {
+                    setTimeout(function() {$('#default_process_bar').hide();self.value = '';}, options.successTimeout*1000);
+                }
             }
         }, false);
         //上传出错
@@ -34,8 +37,8 @@
         }, false);
         //上传终止【一般不会，可能是异常导致】
         xhr.addEventListener("abort", function(evt) {
-            if ($.isFunction(options.onUploadCanceled)) {
-                options.onUploadCanceled(evt);
+            if ($.isFunction(options.onUploadCancel)) {
+                options.onUploadCancel(evt);
             } else {
                 console.dir(evt);
             }
@@ -45,11 +48,16 @@
     }
 
     /**
-     * 取消上传
+     * 取消上传       
+     * @param {type} self   文件域对象
      * @returns {undefined}
      */
-    function cancel() {
+    function cancel(self) {
         xhr.abort();
+        self.value = '';
+        if ($.isFunction($(self).data('onUploadCancel'))) {
+            $(self).data('onUploadCancel')();
+        }
     }
 
     /**
@@ -58,17 +66,18 @@
      * @param {type} evt    上传队列对象
      * @returns {undefined}
      */
-    function uploadProgress(self, evt) {
+    function uploadProgress(self, evt) {              
         var processBar = '';
         if (!$('#default_process_bar').size()) {
-            processBar = $('<div id="default_process_bar"></div>');
-            $(self).after(processBar);
+            processBar = $('<div id="default_process_bar"><progress max="100" value="0"></progress><span>0%</span></div>');
+            $(self).before(processBar);
         } else {
-            processBar = $('#default_process_bar');
+            processBar = $('#default_process_bar').show();
         }
         if (evt.lengthComputable) {
             var percentComplete = Math.round(evt.loaded * 100 / evt.total);
-            processBar[0].innerHTML = percentComplete.toString() + '%';
+            processBar.find('progress').val(percentComplete);
+            processBar.find('span').text(percentComplete.toString() + '%');
         }
         else {
             processBar[0].innerHTML = 'unable to compute';
@@ -79,6 +88,13 @@
             var defaults = {
                 id: '',
                 url: "",
+                autoUpload: true,
+                successTimeout: 3,
+                uploadDiv: '',
+                uploadButtonClass: '',
+                uploadButtonText: '开始上传',
+                cancelButtonText: '取消上传',
+                cancelButtonClass: '',
                 onSelected: '',
                 onUploadComplete: '',
                 onUploadFailed: '',
@@ -89,17 +105,32 @@
                 options = {"url": options};
             }
             options = $.extend(defaults, options);
+            $(self).after('<div class="' + options.uploadDiv + '">\n\
+            <button type="button" id="start_upload" class="' + options.uploadButtonClass + '">' + options.uploadButtonText + '</button>\n\
+            <button type="button" id="cancel_upload" class="' + options.cancelButtonClass + '">' + options.cancelButtonText + '</button></div>');
+            
             $(this).on('change', function() {
                 //文件选择后回调
                 if ($.isFunction(options.onSelected)) {
                     options.onSelected(self.files[0]);
                 }
-                uploadFile(self, options);
+                //是否选择文件后自动上传
+                if (options.autoUpload === true) {
+                    uploadFile(self, options);
+                } else {
+                    $(self).data('onUploadCancel', options.onUploadCancel);
+                    $('#start_upload').on('click', function() {
+                        uploadFile(self, options);
+                    });
+                    $('#cancel_upload').on('click', function() {
+                        cancel(self);
+                    });
+                }
             });
             return $(this);
         },
         cancel: function() {
-            cancel();
+            cancel(this[0]);
         }
     });
 })(jQuery);
