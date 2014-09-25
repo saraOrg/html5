@@ -1,4 +1,4 @@
-+(function($) {
++(function($, domain) {
     var xhr = new XMLHttpRequest();
     /**
      * 执行上传
@@ -23,7 +23,10 @@
             } else {
                 //alert(evt.target.responseText);
                 if ($('#default_process_bar').size()) {
-                    setTimeout(function() {$('#default_process_bar').hide();self.value = '';}, options.successTimeout*1000);
+                    setTimeout(function() {
+                        $('#default_process_bar').hide();
+                        self.value = '';
+                    }, options.successTimeout * 1000);
                 }
             }
         }, false);
@@ -53,10 +56,14 @@
      * @returns {undefined}
      */
     function cancel(self) {
+        //终止ajax提交
         xhr.abort();
+        //文件域内容清空
         self.value = '';
-        if ($.isFunction($(self).data('onUploadCancel'))) {
-            $(self).data('onUploadCancel')();
+        //是否有回调要执行
+        var cancel = $(self).data('onUploadCancel');
+        if ($.isFunction(cancel)) {
+            cancel();
         }
     }
 
@@ -66,7 +73,7 @@
      * @param {type} evt    上传队列对象
      * @returns {undefined}
      */
-    function uploadProgress(self, evt) {              
+    function uploadProgress(self, evt) {
         var processBar = '';
         if (!$('#default_process_bar').size()) {
             processBar = $('<div id="default_process_bar"><progress max="100" value="0"></progress><span>0%</span></div>');
@@ -106,9 +113,8 @@
             }
             options = $.extend(defaults, options);
             $(self).after('<div class="' + options.uploadDiv + '">\n\
-            <button type="button" id="start_upload" class="' + options.uploadButtonClass + '">' + options.uploadButtonText + '</button>\n\
-            <button type="button" id="cancel_upload" class="' + options.cancelButtonClass + '">' + options.cancelButtonText + '</button></div>');
-            
+            <button type="button" id="' + domain + '_start_upload" class="' + options.uploadButtonClass + '">' + options.uploadButtonText + '</button>\n\
+            <button type="button" id="' + domain + '_cancel_upload" class="' + options.cancelButtonClass + '">' + options.cancelButtonText + '</button></div>');
             $(this).on('change', function() {
                 //文件选择后回调
                 if ($.isFunction(options.onSelected)) {
@@ -119,18 +125,18 @@
                     uploadFile(self, options);
                 } else {
                     $(self).data('onUploadCancel', options.onUploadCancel);
-                    $('#start_upload').on('click', function() {
+                    $('#' + domain + '_start_upload').on('click', function() {
                         uploadFile(self, options);
                     });
-                    $('#cancel_upload').on('click', function() {
+                    $('#' + domain + '_cancel_upload').on('click', function() {
                         cancel(self);
                     });
                 }
             });
-            return $(this);
+            return this;
         },
         cancel: function() {
             cancel(this[0]);
         }
     });
-})(jQuery);
+})(jQuery, 'yangbai');
