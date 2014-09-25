@@ -79,6 +79,7 @@
             var defaults = {
                 id: '',
                 url: "",
+                onSelected: '',
                 onUploadComplete: '',
                 onUploadFailed: '',
                 onUploadCancel: ''
@@ -89,6 +90,10 @@
             }
             options = $.extend(defaults, options);
             $(this).on('change', function() {
+                //文件选择后回调
+                if ($.isFunction(options.onSelected)) {
+                    options.onSelected(self.files[0]);
+                }
                 uploadFile(self, options);
             });
             return $(this);
