@@ -8,7 +8,10 @@
      */
     function uploadFile(self, options) {
         var fd = new FormData();
-        fd.append(self.id, document.getElementById(self.id).files[0]);
+        if (!/image/.test(self.files[0].type)) {
+            fd.append('is_base64', 0);
+            fd.append(self.id, document.getElementById(self.id).files[0]);
+        }
         xhr.upload.addEventListener("progress", function(evt) {
             if ($.isFunction(options.onUploadProgress)) {
                 options.onUploadProgress(evt.lengthComputable, evt.loaded, evt.total);
@@ -46,8 +49,12 @@
                 console.dir(evt);
             }
         }, false);
-        xhr.open("POST", options.url);
-        xhr.send(fd);
+        if (/image/.test(self.files[0].type)) {
+            compressUpload(self.files[0], options.url);
+        } else {
+            xhr.open("POST", options.url);
+            xhr.send(fd);
+        }
     }
 
     /**
@@ -92,6 +99,36 @@
             processBar[0].innerHTML = 'unable to compute';
         }
     }
+
+    /**
+     * canvans压缩图片上传
+     * @param {type} file
+     * @param {type} action
+     * @returns {undefined}
+     */
+    function compressUpload(file, action) {
+        var $canvas = '';
+        if ($('#js_canvas').size()) {
+            $canvas = $('#js_canvas');
+        } else {
+            $canvas = $('<canvas id="js_canvas" hidden></canvas>');
+            $('body').append($canvas);
+        }
+        var url = webkitURL.createObjectURL(file),
+                image = new Image(),
+                canvas = $canvas[0],
+                ctx = canvas.getContext('2d');
+        image.onload = function() {
+            var width = image.width / 2, height = image.height / 2;
+            $canvas.attr({width: width, height: height});
+            ctx.drawImage(image, 0, 0, width, height);
+            var base64 = canvas.toDataURL('image/jpeg', 0.5).substr(22);
+            $.post(action, {data: base64.substr(22), is_base64: 1}, function(data) {
+            });
+        };
+        image.src = url;
+    }
+
     $.fn.extend({
         upload: function(options) {
             var defaults = {
