@@ -56,14 +56,16 @@
      * @returns {undefined}
      */
     function cancel(self) {
-        //终止ajax提交
-        xhr.abort();
-        //文件域内容清空
-        self.value = '';
-        //是否有回调要执行
-        var cancel = $(self).data('onUploadCancel');
-        if ($.isFunction(cancel)) {
-            cancel();
+        //是否终止了ajax提交
+        if (!xhr.abort()) {
+            //是否有回调要执行
+            var cancel = $(self).data('onUploadCancel');
+            if ($.isFunction(cancel)) {
+                cancel();
+            } else {
+                //文件域内容清空
+                self.value = '';
+            }
         }
     }
 
