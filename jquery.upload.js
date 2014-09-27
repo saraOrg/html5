@@ -50,7 +50,7 @@
             }
         }, false);
         if (/image/.test(self.files[0].type)) {
-            compressUpload(self.files[0], options.url);
+            compress(self.files[0], options.url, fd, xhr);
         } else {
             xhr.open("POST", options.url);
             xhr.send(fd);
@@ -102,11 +102,13 @@
 
     /**
      * canvans压缩图片上传
-     * @param {type} file
-     * @param {type} action
+     * @param {type} file   文件对象
+     * @param {type} action 服务器地址
+     * @param {type} fd     表单对象
+     * @param {type} xhr    ajax对象
      * @returns {undefined}
      */
-    function compressUpload(file, action) {
+    function compress(file, action, fd, xhr) {
         var $canvas = '';
         if ($('#js_canvas').size()) {
             $canvas = $('#js_canvas');
@@ -123,18 +125,23 @@
             $canvas.attr({width: width, height: height});
             ctx.drawImage(image, 0, 0, width, height);
             var base64 = canvas.toDataURL('image/jpeg', 0.5).substr(22);
-            $.post(action, {data: base64.substr(22), is_base64: 1}, function(data) {
-            });
+            fd.append('is_base64', 1);
+            fd.append('data', base64.substr(22));
+            xhr.open("POST", action);
+            xhr.send(fd);
         };
         image.src = url;
     }
-
+    /**
+     * jQuery html5上传插件
+     */
     $.fn.extend({
         upload: function(options) {
             var defaults = {
-                id: '',
                 url: "",
                 autoUpload: true,
+                width: 100,
+                height: 30,
                 successTimeout: 3,
                 uploadDiv: '',
                 uploadButtonClass: '',
@@ -145,16 +152,23 @@
                 onUploadComplete: '',
                 onUploadFailed: '',
                 onUploadCancel: ''
-            },
-            self = this[0];
+            };
             if ('string' === $.type(options)) {
                 options = {"url": options};
             }
             options = $.extend(defaults, options);
-            $(self).after('<div class="' + options.uploadDiv + '">\n\
-            <button type="button" id="' + domain + '_start_upload" class="' + options.uploadButtonClass + '">' + options.uploadButtonText + '</button>\n\
-            <button type="button" id="' + domain + '_cancel_upload" class="' + options.cancelButtonClass + '">' + options.cancelButtonText + '</button></div>');
-            $(this).on('change', function() {
+            var _this = this[0],                    //上传按钮对象
+                    fileId = _this.id + '_file',    //文件域id
+                    top = _this.offsetTop || 0,     //文件域top     
+                    left = _this.offsetLeft || 0;   //文件域left
+            //创建上传文件域
+            this.after('<input type="file" id="' + fileId + '" \n\
+            class="' + domain + '-upload-quene" \n\
+            style="position:absolute;opacity: 0;cursor:pointer;width:' + options.width + 'px;height:' + options.height + 'px;\n\
+            top:' + top + 'px;left:' + left + 'px" />');
+            var self = $('#' + fileId)[0];          //文件域对象
+            //监听文件域上传
+            $('#' + fileId).on('change', function() {
                 //文件选择后回调
                 if ($.isFunction(options.onSelected)) {
                     options.onSelected(self.files[0]);
@@ -163,10 +177,17 @@
                 if (options.autoUpload === true) {
                     uploadFile(self, options);
                 } else {
+                    //创建上传/取消按钮
+                    $(self).after('<div class="' + options.uploadDiv + '">\n\
+                    <button type="button" id="' + domain + '_start_upload" class="' + options.uploadButtonClass + '">' + options.uploadButtonText + '</button>\n\
+                    <button type="button" id="' + domain + '_cancel_upload" class="' + options.cancelButtonClass + '">' + options.cancelButtonText + '</button></div>');
+                    //记录上传取消函数，以便于后面使用
                     $(self).data('onUploadCancel', options.onUploadCancel);
+                    //监听上传按钮
                     $('#' + domain + '_start_upload').on('click', function() {
                         uploadFile(self, options);
                     });
+                    //监听取消按钮
                     $('#' + domain + '_cancel_upload').on('click', function() {
                         cancel(self);
                     });
@@ -175,7 +196,7 @@
             return this;
         },
         cancel: function() {
-            cancel(this[0]);
+            cancel($('#' + this[0].id + '_file')[0]);
         }
     });
 })(jQuery, 'yangbai');
