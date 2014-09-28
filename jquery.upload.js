@@ -28,6 +28,7 @@
                 if ($('#default_process_bar').size()) {
                     setTimeout(function() {
                         $('#default_process_bar').hide();
+                        $('#' + domain + '_' + 'upload_div').hide();
                         self.value = '';
                     }, options.successTimeout * 1000);
                 }
@@ -178,7 +179,7 @@
                     uploadFile(self, options);
                 } else {
                     //创建上传/取消按钮
-                    $(self).after('<div class="' + options.uploadDiv + '">\n\
+                    $(self).after('<div class="' + options.uploadDiv + '" id="' + domain + '_upload_div">\n\
                     <button type="button" id="' + domain + '_start_upload" class="' + options.uploadButtonClass + '">' + options.uploadButtonText + '</button>\n\
                     <button type="button" id="' + domain + '_cancel_upload" class="' + options.cancelButtonClass + '">' + options.cancelButtonText + '</button></div>');
                     //记录上传取消函数，以便于后面使用
