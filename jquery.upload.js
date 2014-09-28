@@ -50,8 +50,8 @@
                 console.dir(evt);
             }
         }, false);
-        if (/image/.test(self.files[0].type)) {
-            compress(self.files[0], options.url, fd, xhr);
+        if (self.files[0] && self.files[0].type && /image/.test(self.files[0].type)) {
+            compressUpload(self.files[0], options.url, fd, xhr);
         } else {
             xhr.open("POST", options.url);
             xhr.send(fd);
@@ -109,7 +109,7 @@
      * @param {type} xhr    ajax对象
      * @returns {undefined}
      */
-    function compress(file, action, fd, xhr) {
+    function compressUpload(file, action, fd, xhr) {
         var $canvas = '';
         if ($('#js_canvas').size()) {
             $canvas = $('#js_canvas');
@@ -158,16 +158,16 @@
                 options = {"url": options};
             }
             options = $.extend(defaults, options);
-            var _this = this[0],                    //上传按钮对象
-                    fileId = _this.id + '_file',    //文件域id
-                    top = _this.offsetTop || 0,     //文件域top     
-                    left = _this.offsetLeft || 0;   //文件域left
+            var _this = this[0],                                //上传按钮对象
+                    fileId = (_this ? _this.id : '') + '_file', //文件域id
+                    top = _this ? _this.offsetTop : 0,          //文件域top     
+                    left = _this ? _this.offsetLeft : 0;        //文件域left
             //创建上传文件域
             this.after('<input type="file" id="' + fileId + '" \n\
             class="' + domain + '-upload-quene" \n\
             style="position:absolute;opacity: 0;cursor:pointer;width:' + options.width + 'px;height:' + options.height + 'px;\n\
             top:' + top + 'px;left:' + left + 'px" />');
-            var self = $('#' + fileId)[0];          //文件域对象
+            var self = $('#' + fileId)[0];                      //文件域对象
             //监听文件域上传
             $('#' + fileId).on('change', function() {
                 //文件选择后回调
