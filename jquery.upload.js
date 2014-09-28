@@ -8,7 +8,8 @@
      */
     function uploadFile(self, options) {
         var fd = new FormData();
-        if (!/image/.test(self.files[0].type)) {
+        //不压缩图片
+        if (!options.compressImage) {
             fd.append('is_base64', 0);
             fd.append(self.id, document.getElementById(self.id).files[0]);
         }
@@ -50,7 +51,8 @@
                 console.dir(evt);
             }
         }, false);
-        if (self.files[0] && self.files[0].type && /image/.test(self.files[0].type)) {
+        //开启图片自动压缩
+        if (options.compressImage && self.files[0] && self.files[0].type && /image/.test(self.files[0].type)) {
             compressUpload(self.files[0], options.url, fd, xhr);
         } else {
             xhr.open("POST", options.url);
@@ -144,6 +146,7 @@
                 width: 100,
                 height: 30,
                 successTimeout: 3,
+                compressImage: false,
                 uploadDiv: '',
                 uploadButtonClass: '',
                 uploadButtonText: '开始上传',
