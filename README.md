@@ -1,10 +1,10 @@
 ##html5插件集合
-**1，一步上传插件**
+**1，异步上传插件**
 
 	<div id="upload"></div>
 	<script>
 		$('#upload').upload({
-			url: "",							//服务器地址
+			url: "",						//服务器地址
 			autoUpload: true,				//是否开启自动上传，默认开启
 			width: 100,						//上传域宽度
 			height: 30,						//上传域高度
@@ -22,4 +22,5 @@
 		});
 	</script>
 按照上面的初始化操作之后，就可以使用了，html5的新功能还是很方便的！
-有什么要提点的来微博畅聊哈，[@yangbai](http://weibo.com/yangbai1988)
+
+有什么要提点的来微博畅聊哈 [@yangbai](http://weibo.com/yangbai1988)
