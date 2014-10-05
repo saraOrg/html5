@@ -27,7 +27,7 @@
         },
         save: function(options) {
             options = options || {};
-            !!options.filterTypes && (this.filterTypes = options.filterTypes);
+            !!options.filterTypes && (this.filterTypes = this.filterTypes.push(options.filterTypes));
             var _this = this[0];
                 len = _this.length;
             if (!storage) {
