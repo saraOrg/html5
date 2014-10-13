@@ -73,6 +73,6 @@
             $('#js_image').rotate();
         });
     </script>
-[在线演示](http://www.yangbai66644.com/Demo/rotate.html)
+[在线演示](http://www.yangbai6644.com/Demo/rotate.html)
 
 有什么要提点的来微博畅聊哈 [@yangbai](http://weibo.com/yangbai1988)
