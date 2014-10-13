@@ -53,4 +53,26 @@
 	</script>
 上面操作完成之后就可以使用了。如果需要不保存什么类型的话，可以给save方法传递参数，格式：{filterTypes: ['hidden', 'radios']}等；
 
+**3，旋转图片插件**
+
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="jquery.rotate.js"></script>
+    <div id="demo_wrap">
+        <p>
+            <a href="javascript:void(0);" id="js_rotate_left">向左转</a>
+            <em>|</em>
+            <a href="javascript:void(0);" id="js_rotate_right">向右转</a>
+            <img id="js_image" src="avatar.png"/>
+        </p>
+    </div>
+    <script>
+        $('#rotate_left').on('click', function() {
+            $('#js_image').rotate(false);
+        });
+        $('#rotate_right').on('click', function() {
+            $('#js_image').rotate();
+        });
+    </script>
+[在线演示](http://www.yangbai66644.com/Demo/rotate.html)
+
 有什么要提点的来微博畅聊哈 [@yangbai](http://weibo.com/yangbai1988)
