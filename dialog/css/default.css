@@ -1,15 +1,16 @@
 #dialog {
+	z-index: 9999;
+}
+.dialog-tips {
 	position: fixed; 
-	left: 200px; 
-	top: 400px; 
 	width: auto; 
 	height: 38px; 
 	line-height: 38px; 
 	background: #fff; 
-	border: solid 4px #e6e6e6;
+	border: solid 2px #888;
 	border-radius: 4px;
-	padding: 5px; 
-	z-index: 9999;
+	box-shadow: 0 0 12px rgba(0, 0, 0, .5);
+	padding: 15px; 
 }
 #dialog .tips {
 	width:38px; 
@@ -45,6 +46,63 @@
 	position:fixed;
 	left:0; top:0;
 }
+
+.dialog-modal {
+	background: #fff;
+	position: fixed;
+	top: 30px;
+	border: 1px solid #888;
+	border-radius: 4px;
+	box-shadow: 0 0 12px rgba(0, 0, 0, 0.5);
+}
+
+.modal-heading {
+	padding: 10px;
+	background: #333;
+	font-size: 20px;
+	color: #fff;
+	text-align: center;
+	cursor: move;
+}
+
+.modal-body {
+	text-align: center;
+	vertical-align: middle;
+	padding: 10px;
+}
+
+.modal-footer {
+	border-top: 1px solid #f2f2f2;
+	text-align: center;
+	padding: 10px;
+}
+
+.modal-footer .btn {
+	display: inline-block;
+	padding: 6px 12px;
+	margin-bottom: 0;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 1.42857143;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-image: none;
+	border: 1px solid transparent;
+	border-radius: 4px;
+}
+
+.modal-footer .btn-confirm {
+	color: #fff;
+	background-color: #428bca;
+	border-color: #357ebd;
+}
+
 a.btn_dialog {
 	text-decoration: none;
 }

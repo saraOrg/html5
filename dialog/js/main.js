@@ -11,4 +11,7 @@ require(['jquery', 'dialog'], function($, dialog) {
 	$('#js_btn_tips_loading').on('click', function() {
 		dialog.loading();
 	});
+	$('#js_btn_dialog_alert').on('click', function() {
+		dialog.alert('至少说点什么吧', function() {alert();});
+	});
 });
