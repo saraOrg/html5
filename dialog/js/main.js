@@ -1,4 +1,4 @@
-require(['jquery', 'dialog'], function($, dialog) {
+require(['jquery', 'jqueryui', 'dialog'], function($, $ui, dialog) {
 	$('#js_btn_tips_success').on('click', function() {
 		dialog.success();
 	});
@@ -12,6 +12,6 @@ require(['jquery', 'dialog'], function($, dialog) {
 		dialog.loading();
 	});
 	$('#js_btn_dialog_alert').on('click', function() {
-		dialog.alert('至少说点什么吧', function() {alert();});
+		dialog.alert('至少说点什么吧');
 	});
 });

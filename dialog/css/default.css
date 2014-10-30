@@ -43,64 +43,103 @@
 	opacity:0.3;
 	filter:alpha(opacity=30);
 	z-index:900; 
-	position:fixed;
+	position: absolute;
 	left:0; top:0;
 }
 
 .dialog-modal {
 	background: #fff;
 	position: fixed;
-	top: 30px;
 	border: 1px solid #888;
 	border-radius: 4px;
 	box-shadow: 0 0 12px rgba(0, 0, 0, 0.5);
+	border-top: 2px solid #fa7f40;
+	font: 14px/1.3 'Arial','Microsoft YaHei';
 }
 
 .modal-heading {
 	padding: 10px;
-	background: #333;
-	font-size: 20px;
-	color: #fff;
-	text-align: center;
+	background: #fff;
+	font-size: 16px;
+	font-weight: bold;
+	color: #000;
+	text-align: left;
+	border-bottom: 1px solid #f2f2f5;
 	cursor: move;
+}
+
+.modal-heading .modal-close {
+	font-size: 16px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 10px;
+	color: #696e78;
+	cursor: pointer;
+}
+
+.modal-heading .modal-close:hover {
+	color: #eb7350;
 }
 
 .modal-body {
 	text-align: center;
 	vertical-align: middle;
-	padding: 10px;
+	padding: 20px 40px;
+	color: #555;
 }
 
 .modal-footer {
-	border-top: 1px solid #f2f2f2;
+	background: #f2f2f5;
 	text-align: center;
 	padding: 10px;
 }
 
 .modal-footer .btn {
-	display: inline-block;
-	padding: 6px 12px;
-	margin-bottom: 0;
-	font-size: 14px;
-	font-weight: 400;
-	line-height: 1.42857143;
-	text-align: center;
+	padding: 0 10px 0 10px;
 	white-space: nowrap;
-	vertical-align: middle;
+	display: inline-block;
+	border-radius: 2px;
+	height: 30px;
+	line-height: 30px;
+	text-decoration: none;
+	font-size: 14px;
+	min-width: 60px;
+	text-align: center;
+	outline: none;
 	cursor: pointer;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-	background-image: none;
-	border: 1px solid transparent;
-	border-radius: 4px;
 }
 
 .modal-footer .btn-confirm {
+	background: #ff8140;
+	border: 1px solid #f77c3d;
 	color: #fff;
-	background-color: #428bca;
-	border-color: #357ebd;
+	box-shadow: 0px 1px 2px rgba(0,0,0,0.25);
+	color: #fff;
+}
+
+.modal-footer .btn-confirm:hover {
+	background: #eb7350;
+}
+
+/**
+ * skin of green
+ */
+.green .modal-body{
+	color: green;
+}
+.green.dialog-modal {
+	border-top: 2px solid green;
+}
+
+/**
+ * skin of blue
+ */
+.blue .modal-body{
+	color: blue;
+}
+.blue.dialog-modal {
+	border-top: 2px solid blue;
 }
 
 a.btn_dialog {

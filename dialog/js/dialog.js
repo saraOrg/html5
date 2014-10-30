@@ -8,26 +8,41 @@ define(['jquery'], function($) {
 		},
 		close: function() {
 			$('#bremove').remove();
+			// $('#bremove').hide(100, function() {
+			// 	$(this).remove();
+			// });
 			$('#dialog').remove();
+			// $('#dialog').hide(100, function() {
+			// 	$(this).remove();
+			// });
 		},
 		fixPosition: function() {
-			$('#dialog').css({'left':($(window).width()/2)-($('#dialog').width()+18)/2+'px','top':($(window).height()/2)-($('#dialog').height()+18)/2+'px'});
+			$('#dialog').css({'left':($(window).width()/2)-($('#dialog').width()+18)/2+'px','top':($(window).height()/2)-$('#dialog').height() -10 +'px'});
 		},
 		box: function() {
 
 		},
-		alert: function(content, callback) {
+		alert: function(content, opt) {
 			content = content || '<p>说点什么吧...</p>';
-			var html = '<div id="dialog" class="dialog-modal" style="width:300px;">';
-				html += '<div class="modal-heading">提示</div>';
+			opt = opt || {};
+			opt.skin = opt.skin || '';
+			var html = '<div id="dialog" class="dialog-modal ' + opt.skin + '" style="width:300px;">';
+				html += '<div class="modal-heading">提示';
+				html += '<span class="modal-close" title="关闭">X</span></div>';
 				html += '<div class="modal-body">' + content + '</div>';
 				html += '<div class="modal-footer"><button class="btn btn-confirm">确定</button></div>',
-				dialog = this;
+				alert = $(html), dialog = this;
 			this.modalBlackout();
-			$('body').append(html);
+			$('body').append(alert);
 			this.fixPosition();
+			if (!opt.is_drag) {
+				alert.draggable({handle: '.modal-heading'});
+			}
 			$('.btn-confirm').click(function() {
-				$.isFunction(callback) && callback();
+				$.isFunction(opt.callback) && opt.callback();
+				dialog.close();
+			});
+			$('.modal-close').click(function() {
 				dialog.close();
 			});
 		},
