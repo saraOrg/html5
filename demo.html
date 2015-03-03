@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>旋转图片Demo</title>
+</head>
+<body>
+	<p>
+		<button id="rotate_left">rotate left</button>
+		<button id="rotate_right">rotate right</button>
+	</p>
+	<img data-width="111" id="image" src="http://ww2.sinaimg.cn/bmiddle/7814a4b1jw1el8pqmxt0dj20c80xhgth.jpg">
+	<script type="text/javascript" src="http://static.yangbai6644.com/js/jquery.min.js"></script>
+	<script type="text/javascript" src="jquery.rotate.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			$('#rotate_left').on('click', function() {
+				$('#image').rotate(false);
+			});
+			$('#rotate_right').on('click', function() {
+				$('#image').rotate();
+			});
+		});
+	</script>
+</body>
+</html>
