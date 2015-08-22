@@ -3,14 +3,42 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 	<title>旋转图片Demo</title>
+	<style type="text/css">
+		#div1 {
+			width: 300px;
+			height: 300px;
+			background: red;
+			position: absolute;
+		}
+		#div2 {
+			width: 30px;
+			height: 30px;
+			background: yellow;
+			position: absolute;
+			right: 0;
+			bottom: 0;
+			cursor: col-resize;
+		}
+		#div3 {
+			width: 100px;
+			height: 100px;
+			background: blue;
+			position: absolute;
+			right: 0;
+			top: 0;
+			cursor: move;
+		}
+	</style>
 </head>
 <body>
+	<div id="div1"><div id="div2"></div></div>
+	<div id="div3"></div>
 	<p>
 		<button id="rotate_left">rotate left</button>
 		<button id="rotate_right">rotate right</button>
 	</p>
-	<img data-width="111" id="image" src="http://ww2.sinaimg.cn/bmiddle/7814a4b1jw1el8pqmxt0dj20c80xhgth.jpg">
-	<script type="text/javascript" src="http://static.yangbai6644.com/js/jquery.min.js"></script>
+	<!-- <img data-width="111" id="image" src="http://ww2.sinaimg.cn/bmiddle/7814a4b1jw1el8pqmxt0dj20c80xhgth.jpg"> -->
+	<script type="text/javascript" src="http://static.yangbai.me/js/jquery.min.js"></script>
 	<script type="text/javascript" src="jquery.rotate.js"></script>
 	<script type="text/javascript">
 		$(function() {
@@ -21,6 +49,54 @@
 				$('#image').rotate();
 			});
 		});
+		var drag = function(obj) {
+			var flag = false;
+			obj.onmousedown = function(ev) {
+				flag = true;
+				ev = ev || window.event;
+				var x1 = ev.clientX - obj.offsetLeft;
+				var y1 = ev.clientY - obj.offsetTop;
+				document.onmousemove = function(ev) {
+					ev = ev || window.event;
+					if (flag === true) {
+						obj.style.left = ev.clientX - x1 + 'px';
+						obj.style.top = ev.clientY - y1 + 'px';
+					}
+				}
+			}
+			obj.onmouseup = function() {
+				flag = false;
+			}
+		}
+		var oDiv3 = document.getElementById('div3');
+		drag(oDiv3);
+		/**
+		 * div edrag
+		 */
+		var edrag = function(obj1, obj2) {
+			var flag = false;
+			obj2.onmousedown= function(ev) {
+				flag = true;
+				ev = ev || window.event;
+				var x1 = ev.clientX;
+				var y1 = ev.clientY;
+				var w = obj1.offsetWidth;
+				var h = obj1.offsetHeight;
+				document.onmousemove = function(ev) {
+					if (flag === true) {
+						ev = ev || window.event;
+						obj1.style.width = ev.clientX - x1 + w + 'px';
+						obj1.style.height = ev.clientY - y1 + h + 'px';
+					}
+				}
+			}
+			obj2.onmouseup = function() {
+				flag = false;
+			}
+		}
+		var oDiv1 = document.getElementById('div1');
+		var oDiv2 = document.getElementById('div2');
+		edrag(oDiv1, oDiv2);
 	</script>
 </body>
 </html>

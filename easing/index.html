@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Jquery Easing</title>
+</head>
+<body>
+	<div id="number1" style="color:red">0</div>
+	<div id="number2" style="color:green">0</div>
+	<div id="number3" style="color:blue">0</div>
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="jquery.easing.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			var number1 = $('#number1'),
+				number2 = $('#number2'),
+				number3 = $('#number3');
+			$('body').click(function() {
+				number1.animate				//动画属性值
+				{'Counter': 100}, 
+				{
+					duration: 1500,
+					easing: 'easeOutQuad',
+					step: function (now, tween) {
+						//console.dir(tween);
+						number1.html(Math.ceil(now));
+					}
+				}
+			);
+			});
+			number2.animate({'Counter': 98}, {
+				duration: 1800,
+				easing: 'easeOutQuad',
+				step: function (now) {
+					number2.html(Math.ceil(now));
+				}
+			});
+			number3.animate({'Counter': 91}, {
+				duration: 2000,
+				easing: 'easeOutQuad',
+				step: function (now) {
+					number3.html(Math.ceil(now));
+				}
+			})
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>HTML5 Drag and Drop</title>
+		<style type="text/css">
+			.box {
+				width: 300px;
+				height: 300px;
+				float: left;
+				border: 2px solid white;
+			}
+			#div1 {
+				background-color: #336600;
+				border-color: #336600;
+			}
+			#div2 {
+				background-color: #EB7350;
+				border-color: #EB7350;
+			}
+			#div3 {
+				width: 600px;
+				background-color: #FFFFFF;
+				border-color: #FFFFFF;
+			}
+			.enter {
+				border: 2px dashed red;
+				border-color: red !important;
+			}
+		</style> 
+	</head>
+	<body>
+		<div id="div1" class="box"></div>
+		<div id="div2" class="box"></div>
+		<div id="div3" class="box">
+			<img id="img" src="../dialog/img/ico.png" />
+			<!--<div id="img" style="width:30px;height:30px;background-color: #000000;cursor: move;"></div>-->
+		</div>
+		<script type="text/javascript" src="../dialog/js/jquery.js" ></script>
+		<script src="app.js"></script>
+	</body>
+</html>

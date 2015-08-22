@@ -1,0 +1,32 @@
+/**
+ * lightbox css
+ */
+#g-lightbox-mask {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0.75;
+	background: rgb(0, 0, 0);
+	z-index: 1988;
+}
+
+#g-lightbox-layer {
+	position: fixed;
+	width: 400px;
+	height: 300px;
+	left: 50%;
+	margin-left: -200px;
+	top: 100px;
+	background: #0c0;
+	z-index: 1999;
+}
+
+#g-lightbox-layer .g-lightbox-caption {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 40px;
+	background: rgba(0, 0, 0, 0.5);
+}

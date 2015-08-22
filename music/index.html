@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="index.css" />
+		<title>HTML音乐可视化</title>
+	</head>
+	<body>
+		<div class="wrap">
+			<div class="mod_focus mod_focus--album">
+				<div class="mod_focus_body">
+					<img class="mod_focus__img" id="page_img" src="http://p.qpic.cn/music_cover/ianAFslMNR3qgIWmRBDTlGJb1r3yGmgPicwgXoQTjmbsoBe0pvS3XMDg/600?n=1">
+					<h1 class="mod_focus__tit" id="page_title">撕心裂肺情歌集</h1>
+					<p class="mod_focus__desc" id="page_sub_title">创建者：文青中的小清新</p>
+					<p class="mod_focus__desc" id="page_sub_desc">51.9万人播放</p>
+				</div>
+				<div class="mod_focus__mask" id="page_mask" style="opacity:0.3;"></div>
+				<div class="mod_focus__bg" id="page_img_bg" style="background-image: url(http://p.qpic.cn/music_cover/ianAFslMNR3qgIWmRBDTlGJb1r3yGmgPicwgXoQTjmbsoBe0pvS3XMDg/600?n=1);"></div>
+			</div>
+			<ul class="mod_song_list" id="songlit_box">
+				<li class="mod_song_list__item js_song_dom " data-songid="414257">	
+					<div class="mod_song_list__side">		
+						<img class="mod_song_list__img" src="http://imgcache.qq.com/music/photo/album/85/58_albumpic_33485_0.jpg?max_age=31536000">
+						<i class="mod_song_list__play" data-src="http://thirdparty.gtimg.com/C100003xKgVs0gdqZ0.m4a?fromtag=38&vkey=965F10C7C39F67BB0E6C80584DA77DCA36DE87532F39D8BEAE84DDCD277CF31ACD15175BADF424BFC9945A41A5F34DDA2701B1B7EC9A43F0&guid=8372194840"></i>
+					</div>
+					<div class="mod_song_list__body">
+						<a class="mod_song_list__link" href="javascript:;">
+							<h3 class="mod_song_list__tit">钟无艳</h3>			
+							<p class="mod_song_list__desc">谢安琪</p>		
+						</a>	
+					</div>
+				</li>
+				<li class="mod_song_list__item js_song_dom " data-songid="869529">
+					<div class="mod_song_list__side">
+						<img class="mod_song_list__img" src="http://imgcache.qq.com/music/photo/album/52/58_albumpic_73652_0.jpg?max_age=31536000">
+						<i class="mod_song_list__play" data-src="http://thirdparty.gtimg.com/C100000so2FU3l67yw.m4a?fromtag=38&vkey=7345DFE091F74BECA1104B7AFC6F795A1AD0662A302077DA57D0C9B7D8ADF37D58793F2E3E2F892EFCF8EC78FC9F52B75A7A19C8E7994E96&guid=8372194840"></i>
+					</div>	
+					<div class="mod_song_list__body">		
+						<a class="mod_song_list__link" href="javascript:;">			
+							<h3 class="mod_song_list__tit">给我一个理由忘记</h3>			
+							<p class="mod_song_list__desc">A-Lin</p>		
+						</a>
+					</div>
+				</li>
+			</ul>
+			<div class="mod_prompt" id="empty_box" style="display:none;">
+				<img class="mod_prompt__img" width="95" src="http://imgcache.gtimg.cn/mediastyle/mobile/project_v5/extra/empty.png">
+				<h6 class="mod_prompt__tit">空空如也</h6>
+			</div>
+			<div class="mod_bottom_tips">
+				<a class="mod_bottom_tips__btn" id="goapp" href="javascript:;">收藏该歌单</a>
+			</div>
+		</div>
+		<audio style="height:0;width:0;display:none" id="audio" autoplay="" src=""></audio>
+		<script type="text/javascript" src="../dialog/js/jquery.js" ></script>
+		<script src="app.js"></script>
+	</body>
+</html>
